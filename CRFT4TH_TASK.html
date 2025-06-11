@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do App</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background: linear-gradient(to right, #36D1DC, #5B86E5);
+            color: white;
+            margin: 20px;
+        }
+        .container {
+            max-width: 400px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+        input, button {
+            width: 100%;
+            margin: 5px 0;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            font-size: 1em;
+        }
+        input {
+            border: 1px solid #ccc;
+        }
+        button {
+            background: #36D1DC;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        button:hover {
+            background: #5B86E5;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+        li {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #f4f4f4;
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 5px;
+            color: black;
+        }
+        .completed {
+            text-decoration: line-through;
+            color: gray;
+        }
+        .buttons {
+            display: flex;
+            gap: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>To-Do List</h1>
+        <input type="text" id="taskInput" placeholder="Add a task...">
+        <input type="datetime-local" id="taskDate">
+        <button onclick="addTask()">Add Task</button>
+        <ul id="taskList"></ul>
+    </div>
+
+    <script>
+        function addTask() {
+            const taskInput = document.getElementById("taskInput");
+            const taskDate = document.getElementById("taskDate");
+            const taskList = document.getElementById("taskList");
+            
+            if (taskInput.value.trim() === "") return;
+            
+            const li = document.createElement("li");
+            li.innerHTML = `
+                <span>${taskInput.value} (${taskDate.value})</span>
+                <div class="buttons">
+                    <button onclick="markComplete(this)">✔</button>
+                    <button onclick="deleteTask(this)">❌</button>
+                </div>
+            `;
+            
+            taskList.appendChild(li);
+            taskInput.value = "";
+            taskDate.value = "";
+        }
+        
+        function markComplete(button) {
+            button.parentElement.parentElement.firstChild.classList.toggle("completed");
+        }
+        
+        function deleteTask(button) {
+            button.parentElement.parentElement.remove();
+        }
+    </script>
+</body>
+</html>
